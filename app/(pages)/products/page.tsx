@@ -1,43 +1,60 @@
-// import Pagination from "@/app/ui/invoices/pagination";
-import Search from "@/app/ui/components/search";
-// import Table from "@/app/ui/invoices/table";
-// import { CreateInvoice } from "@/app/ui/invoices/buttons";
+import Search from "@/app/ui/products/search";
 import { lusitana } from "@/app/ui/fonts";
-// import { InvoicesTableSkeleton } from "@/app/ui/skeletons";
 import { Suspense } from "react";
 import { Metadata } from "next";
-import { CardProduct } from "@/app/ui/products/card-product";
-import { SkeletonCard } from "@/app/ui/skeleton/card";
+import { CardsSkeleton } from "@/app/ui/skeleton/cards";
+import CardProducts from "@/app/ui/products/card-products";
+import { PageRequest } from "@/app/lib/models/product";
+import { PaginationFullButton } from "@/app/ui/components/pagination/pagination-full-button";
+import { fetchProductByTenandId } from "@/app/lib/apis/api-tenant-product";
 
 export const metadata: Metadata = {
-  title: "Invoices",
+  title: "Product",
 };
 
 export default async function Page(props: {
   searchParams?: Promise<{
-    query?: string;
-    page?: string;
+    tenandId?: string;
+    pageIndex?: string;
+    pageSize?: string;
+    sortExpression: string;
   }>;
 }) {
   const searchParams = await props.searchParams;
-  const query = searchParams?.query || "";
-  const currentPage = Number(searchParams?.page) || 1;
-  //   const totalPages = await fetchInvoicesPages(query);
+  const tenandId =
+    searchParams?.tenandId || "45a26bfc-f2b2-4ca2-ab49-9ee8e9adcfec";
+  // const totalPages = await fetchInvoicesPages(query);
+  const pageRequest: PageRequest = {
+    pageIndex: isNaN(Number(searchParams?.pageIndex))
+      ? 0
+      : Number(searchParams?.pageIndex), // Default to 1 if conversion fails
+    pageSize: isNaN(Number(searchParams?.pageSize))
+      ? 10
+      : Number(searchParams?.pageSize),
+    sortExpression: searchParams?.sortExpression || "",
+  };
+
+  const products = await fetchProductByTenandId(tenandId, pageRequest);
 
   return (
     <div className="w-full">
       <div className="flex w-full items-center justify-between">
-        <h1 className={`${lusitana.className} text-2xl`}>Invoices</h1>
+        <h1 className={`${lusitana.className} text-2xl`}>Products</h1>
       </div>
+
       <div className="mt-4 flex items-center justify-between gap-2 md:mt-8">
         <Search placeholder="Search by tenantId ..." />
       </div>
-      <Suspense key={query + currentPage} fallback={<SkeletonCard />}>
-        <CardProduct />
+
+      <Suspense fallback={<CardsSkeleton />}>
+        <CardProducts products={products.items} />
       </Suspense>
-      {/* <div className="mt-5 flex w-full justify-center">
-        <Pagination totalPages={totalPages} />
-      </div> */}
+
+      <PaginationFullButton
+        pageSize={pageRequest.pageSize}
+        pageIndex={pageRequest.pageIndex}
+        totalItems={products.totalCount}
+      />
     </div>
   );
 }
