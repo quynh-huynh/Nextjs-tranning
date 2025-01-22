@@ -10,7 +10,7 @@ import {
   PaginationPrevious,
   PaginationEllipsis,
 } from "./pagination";
-import { usePathname, useRouter, useSearchParams } from "next/navigation";
+import { useUpdateSearchParams } from "@/app/hooks/useUpdateSearchParams";
 
 interface PaginationFullButtonProps {
   totalItems: number;
@@ -23,28 +23,18 @@ export function PaginationFullButton({
   pageSize,
   pageIndex,
 }: PaginationFullButtonProps) {
-  const searchParams = useSearchParams();
-  const pathname = usePathname();
-  const { replace } = useRouter();
-  const handleUpdatesSearchParamUrl = (name: string, value: string) => {
-    const params = new URLSearchParams(searchParams);
-    if (value) {
-      params.set(name, value);
-    } else {
-      params.delete(name);
-    }
-    replace(`${pathname}?${params.toString()}`);
-  };
-console.log(pageIndex);
+  const updateSearchParams = useUpdateSearchParams();
+
   const [_pageIndex, setPageIndex] = useState(pageIndex + 1);
   const totalPages = Math.ceil(totalItems / pageSize);
 
   const handlePageChange = (page: number) => {
     if (page >= 1 && page <= totalPages) {
       setPageIndex(page);
-      handleUpdatesSearchParamUrl("pageIndex", page.toString());
+      updateSearchParams("pageIndex", (page - 1).toString());
     }
   };
+console.log(pageIndex);
 
   const getPageNumbers = () => {
     let pages = [];

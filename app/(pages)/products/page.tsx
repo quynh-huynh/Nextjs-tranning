@@ -18,11 +18,11 @@ export default async function Page(props: {
     pageIndex?: string;
     pageSize?: string;
     sortExpression: string;
+    searchTerm?: string;
   }>;
 }) {
   const searchParams = await props.searchParams;
-  const tenandId =
-    searchParams?.tenandId || "45a26bfc-f2b2-4ca2-ab49-9ee8e9adcfec";
+  const tenandId = "45a26bfc-f2b2-4ca2-ab49-9ee8e9adcfec";
   // const totalPages = await fetchInvoicesPages(query);
   const pageRequest: PageRequest = {
     pageIndex: isNaN(Number(searchParams?.pageIndex))
@@ -32,6 +32,7 @@ export default async function Page(props: {
       ? 10
       : Number(searchParams?.pageSize),
     sortExpression: searchParams?.sortExpression || "",
+    searchTerm: searchParams?.searchTerm || ""
   };
 
   const products = await fetchProductByTenandId(tenandId, pageRequest);
@@ -43,7 +44,7 @@ export default async function Page(props: {
       </div>
 
       <div className="mt-4 flex items-center justify-between gap-2 md:mt-8">
-        <Search placeholder="Search by tenantId ..." />
+        <Search placeholder="Search by text ..." />
       </div>
 
       <Suspense fallback={<CardsSkeleton />}>

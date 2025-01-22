@@ -26,12 +26,14 @@ export type combo = {
 
 interface ComboboxProps {
   source: combo[];
+  currentValue?: string;
   onChange: (value: string) => void;
+  className?: string;
 }
 
-export function Combobox({ source, onChange }: ComboboxProps) {
+export function Combobox({ source, currentValue, onChange, className }: ComboboxProps) {
   const [open, setOpen] = React.useState(false);
-  const [value, setValue] = React.useState("");
+  const [value, setValue] = React.useState(currentValue);
 
   const handleSelect = (currentValue: string) => {
     const newValue = currentValue === value ? "" : currentValue;
@@ -47,17 +49,22 @@ export function Combobox({ source, onChange }: ComboboxProps) {
           variant="outline"
           role="combobox"
           aria-expanded={open}
-          className="w-[200px] justify-between"
+          className={cn(
+            "w-[200px] justify-between border border-gray-200 bg-white text-sm",
+            "hover:bg-gray-100 px-3 py-2",
+            "text-gray-500 font-normal",
+            className
+          )}
         >
           {value
             ? source?.find((framework) => framework.value === value)?.label
             : "Select ..."}
-          <ChevronsUpDown className="opacity-50" />
+          <ChevronsUpDown className="h-4 w-4 shrink-0 opacity-50" />
         </Button>
       </PopoverTrigger>
       <PopoverContent className="w-[200px] p-0 bg-white">
         <Command>
-          <CommandInput placeholder="Search ..." className="h-9" />
+          <CommandInput placeholder="Search ..." className="h-9 text-sm" />
           <CommandList>
             <CommandEmpty>No framework found.</CommandEmpty>
             <CommandGroup className="z-15">
