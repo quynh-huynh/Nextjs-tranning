@@ -23,7 +23,7 @@ export default async function Page(props: {
 }) {
   const searchParams = await props.searchParams;
   const tenandId = "45a26bfc-f2b2-4ca2-ab49-9ee8e9adcfec";
-  // const totalPages = await fetchInvoicesPages(query);
+  
   const pageRequest: PageRequest = {
     pageIndex: isNaN(Number(searchParams?.pageIndex))
       ? 0

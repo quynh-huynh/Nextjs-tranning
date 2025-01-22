@@ -11,12 +11,14 @@ import Image from "next/image";
 import { Button } from "@/app/ui/components/button";
 import { Product } from "@/app/lib/models/product";
 import { formatCurrency } from "@/app/lib/number";
+import { DetailProduct } from "./button-detail";
+import { QuickviewButton } from "./button-quickview";
 
 export function CardProduct({ product }: { product: Product }) {
   
   return (
     <Card className="w-[250px] h-[350px] m-[10px] flex flex-col items-center justify-between p-2 border border-gray-300 rounded-xl shadow-md">
-      <CardHeader className="flex justify-center items-center">
+      <CardHeader className="flex justify-center items-center overflow-visible h-[30%]">
         <CardTitle>{product.title}</CardTitle>
         <CardDescription>{formatCurrency(product.price)}</CardDescription>
       </CardHeader>
@@ -30,8 +32,9 @@ export function CardProduct({ product }: { product: Product }) {
         />
       </CardContent>
       <CardFooter className="text-xs text-gray-500 flex justify-between">
-        <Button>Quickview</Button>
-        <Button>View full</Button>
+        {/* <Button >Quickview</Button> */}
+        <QuickviewButton id={product.id}/>
+        <DetailProduct id={product.id}/>
       </CardFooter>
     </Card>
   );
