@@ -6,7 +6,7 @@ import { CardsSkeleton } from "@/app/ui/skeleton/cards";
 import CardProducts from "@/app/ui/products/card-products";
 import { PageRequest } from "@/app/lib/models/product";
 import { PaginationFullButton } from "@/app/ui/components/pagination/pagination-full-button";
-import { fetchProductByTenandId } from "@/app/lib/apis/api-tenant-product";
+import { fetchProductsByTenandId } from "@/app/lib/apis/api-tenant-product";
 
 export const metadata: Metadata = {
   title: "Product",
@@ -22,7 +22,6 @@ export default async function Page(props: {
   }>;
 }) {
   const searchParams = await props.searchParams;
-  const tenandId = "45a26bfc-f2b2-4ca2-ab49-9ee8e9adcfec";
   
   const pageRequest: PageRequest = {
     pageIndex: isNaN(Number(searchParams?.pageIndex))
@@ -35,10 +34,10 @@ export default async function Page(props: {
     searchTerm: searchParams?.searchTerm || ""
   };
 
-  const products = await fetchProductByTenandId(tenandId, pageRequest);
+  const products = await fetchProductsByTenandId(pageRequest);
 
   return (
-    <div className="w-full">
+    <div className="w-full ml-20 mr-20">
       <div className="flex w-full items-center justify-between">
         <h1 className={`${lusitana.className} text-2xl`}>Products</h1>
       </div>
@@ -48,7 +47,7 @@ export default async function Page(props: {
       </div>
 
       <Suspense fallback={<CardsSkeleton />}>
-        <CardProducts products={products.items} />
+        <CardProducts products={products?.items} />
       </Suspense>
 
       <PaginationFullButton

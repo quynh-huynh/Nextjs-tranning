@@ -3,8 +3,8 @@
 import * as React from "react";
 import { Check, ChevronsUpDown } from "lucide-react";
 
-import { cn } from "@/app/lib/utils";
-import { Button } from "@/app/ui/components/button";
+import { cn } from "@/lib/utils";
+import { Button } from "@/components/ui//button";
 import {
   Command,
   CommandEmpty,
@@ -12,12 +12,12 @@ import {
   CommandInput,
   CommandItem,
   CommandList,
-} from "@/app/ui/components/command";
+} from "@/components/ui/command";
 import {
   Popover,
   PopoverContent,
   PopoverTrigger,
-} from "@/app/ui/components/popover";
+} from "@/components/ui/popover";
 
 export type combo = {
   value: string;
@@ -66,7 +66,7 @@ export function Combobox({ source, currentValue, onChange, className }: Combobox
         <Command>
           <CommandInput placeholder="Search ..." className="h-9 text-sm" />
           <CommandList>
-            <CommandEmpty>No framework found.</CommandEmpty>
+            <CommandEmpty>No item selected.</CommandEmpty>
             <CommandGroup className="z-15">
               {source?.map((framework) => (
                 <CommandItem

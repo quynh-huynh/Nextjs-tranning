@@ -9,7 +9,7 @@ import {
   PaginationNext,
   PaginationPrevious,
   PaginationEllipsis,
-} from "./pagination";
+} from "@/components/ui/pagination";
 import { useUpdateSearchParams } from "@/app/hooks/useUpdateSearchParams";
 
 interface PaginationFullButtonProps {
@@ -27,14 +27,13 @@ export function PaginationFullButton({
 
   const [_pageIndex, setPageIndex] = useState(pageIndex + 1);
   const totalPages = Math.ceil(totalItems / pageSize);
-
+  
   const handlePageChange = (page: number) => {
     if (page >= 1 && page <= totalPages) {
       setPageIndex(page);
       updateSearchParams("pageIndex", (page - 1).toString());
     }
   };
-console.log(pageIndex);
 
   const getPageNumbers = () => {
     let pages = [];
@@ -57,14 +56,15 @@ console.log(pageIndex);
     <Pagination>
       <PaginationContent>
         <PaginationItem>
-          <PaginationPrevious
-            href="#"
-            onClick={(e) => {
-              e.preventDefault();
-              handlePageChange(_pageIndex - 1);
-            }}
-            disabled={_pageIndex === 1}
-          />
+          {_pageIndex !== 1 && (
+            <PaginationPrevious
+              href="#"
+              onClick={(e) => {
+                e.preventDefault();
+                handlePageChange(_pageIndex - 1);
+              }}
+            />
+          )}
         </PaginationItem>
 
         {getPageNumbers().map((page) => (
@@ -89,14 +89,15 @@ console.log(pageIndex);
         )}
 
         <PaginationItem>
-          <PaginationNext
-            href="#"
-            onClick={(e) => {
-              e.preventDefault();
-              handlePageChange(_pageIndex + 1);
-            }}
-            disabled={_pageIndex === totalPages}
-          />
+          {_pageIndex !== totalPages && (
+            <PaginationNext
+              href="#"
+              onClick={(e) => {
+                e.preventDefault();
+                handlePageChange(_pageIndex + 1);
+              }}
+            />
+          )}
         </PaginationItem>
       </PaginationContent>
     </Pagination>

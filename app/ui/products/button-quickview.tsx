@@ -1,6 +1,6 @@
 import { Copy } from "lucide-react";
 
-import { Button } from "../components/button";
+import { Button } from "@/components/ui/button";
 import {
   Dialog,
   DialogClose,
@@ -10,40 +10,69 @@ import {
   DialogHeader,
   DialogTitle,
   DialogTrigger,
-} from "../components/dialog";
-import { Input } from "../components/input";
-import { Label } from "../components/label";
+} from "@/components/ui/dialog";
+import { Label } from "@/components/ui/label";
+import { Product } from "@/app/lib/models/product";
+import { format } from "path";
+import { formatCurrency } from "@/app/lib/number";
 
-export function QuickviewButton({ id }: { id: string }) {
+export async function QuickviewButton({ product }: { product: Product }) {
+
   return (
     <Dialog>
       <DialogTrigger asChild>
         <Button>Quickview</Button>
       </DialogTrigger>
-      <DialogContent className="sm:max-w-md">
+      <DialogContent className="sm:max-w-md bg-white">
         <DialogHeader>
-          <DialogTitle>Share link</DialogTitle>
+          <DialogTitle>{product.title}</DialogTitle>
           <DialogDescription>
-            Anyone who has this link will be able to view this.
+            Detailed view of the product.
           </DialogDescription>
         </DialogHeader>
-        <div className="flex items-center space-x-2">
-          <div className="grid flex-1 gap-2">
-            <Label htmlFor="link" className="sr-only">
-              Link
-            </Label>
-            <Input
-              id="link"
-              defaultValue="https://ui.shadcn.com/docs/installation"
-              readOnly
-            />
+        <div className="flex flex-col space-y-2 overflow-y-auto">
+          <div>
+            <img src={product.imageUrl} alt={product.title} className="w-full h-[200px] object-cover" />
           </div>
-          <Button type="submit" size="sm" className="px-3">
-            <span className="sr-only">Copy</span>
-            <Copy />
-          </Button>
+          <div>
+            <Label>Price:</Label>
+            <p>{formatCurrency(product.price)}</p>
+          </div>
+          <div>
+            <Label>Regular Price:</Label>
+            <p>{formatCurrency(product.regularPrice)}</p>
+          </div>
+          <div>
+            <Label>Total Reviews:</Label>
+            <p>{product.totalReviews}</p>
+          </div>
+          <div>
+            <Label>Review Stat Five Scale:</Label>
+            <p>{product.reviewStatFiveScale}</p>
+          </div>
+          <div>
+            <Label>Brand Name:</Label>
+            <p>{product.brandName}</p>
+          </div>
+         
+          <div>
+            <ul>
+              {product.attributeGroups.map((group) => (
+                <li key={group.id}>
+                  <strong>{group.name}</strong>
+                  <ul>
+                    {group.attributes.map((attr) => (
+                      <li key={attr.id}>
+                        {attr.name}: {attr.value}
+                      </li>
+                    ))}
+                  </ul>
+                </li>
+              ))}
+            </ul>
+          </div>
         </div>
-        <DialogFooter className="sm:justify-start">
+        <DialogFooter className="flex justify-center">
           <DialogClose asChild>
             <Button type="button" variant="secondary">
               Close

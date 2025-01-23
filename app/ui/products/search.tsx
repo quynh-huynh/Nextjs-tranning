@@ -37,7 +37,7 @@ export default function Search({ placeholder }: { placeholder: string }) {
           onChange={(e) => {
             handleSearch(e.target.value);
           }}
-          defaultValue={useSearchParams().get("tenantId") || ''}
+          defaultValue={useSearchParams().get("searchTerm") || ''}
         />
       </div>
       <Combobox 

@@ -1,11 +1,11 @@
 "use client";
 
+import { Button } from "@/components/ui/button";
 import { useRouter } from "next/navigation";
-import { Button } from "../components/button";
 
-export function DetailProduct({ id }: { id: string }) {
+export function DetailProduct({ customId }: { customId: number }) {
   const router = useRouter();
   return (
-    <Button onClick={() => router.push(`/products/${id}`)}>View full</Button>
+  <Button onClick={() => router.push(`/products/${customId}`)}>View full</Button>
   );
 }

@@ -5,10 +5,10 @@ import {
   CardFooter,
   CardHeader,
   CardTitle,
-} from "@/app/ui/components/card";
+} from "@/components/ui/card";
 
 import Image from "next/image";
-import { Button } from "@/app/ui/components/button";
+import { Button } from "@/components/ui/button";
 import { Product } from "@/app/lib/models/product";
 import { formatCurrency } from "@/app/lib/number";
 import { DetailProduct } from "./button-detail";
@@ -28,13 +28,13 @@ export function CardProduct({ product }: { product: Product }) {
           alt={product.title}
           width={100}
           height={200}
-          className="rounded-md"
+          className="w-full h-[150px] object-cover"
         />
       </CardContent>
       <CardFooter className="text-xs text-gray-500 flex justify-between">
         {/* <Button >Quickview</Button> */}
-        <QuickviewButton id={product.id}/>
-        <DetailProduct id={product.id}/>
+        <QuickviewButton product={product}/>
+        <DetailProduct customId={product.customId}/>
       </CardFooter>
     </Card>
   );
