@@ -1,5 +1,5 @@
 "use client";
-import React, { useActionState, useEffect, useRef, useState } from "react";
+import React, { useActionState, useEffect, useRef } from "react";
 import {
   Dialog,
   DialogClose,
@@ -11,7 +11,7 @@ import {
   DialogTrigger,
 } from "@/components/ui/dialog";
 import { Button } from "@/components/ui/button";
-import { CreateOrder, defaultState, State } from "@/app/lib/actions/order-actions";
+import { CreateOrder, State } from "@/app/lib/actions/order-actions";
 import { Input } from "@/components/ui/input";
 import { Label } from "@radix-ui/react-label";
 import { formatCurrency } from "@/app/lib/number";

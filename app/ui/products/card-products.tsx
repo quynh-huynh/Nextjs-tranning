@@ -10,7 +10,7 @@ export default async function CardProducts({
   return (
     <div className="flex flex-wrap justify-center">
       {products?.map((product: Product) => (
-        <CardProduct product={product} />
+        <CardProduct key={product.id}  product={product} />
       ))}
     </div>
   );

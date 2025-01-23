@@ -1,5 +1,3 @@
-import { Copy } from "lucide-react";
-
 import { Button } from "@/components/ui/button";
 import {
   Dialog,
@@ -13,11 +11,10 @@ import {
 } from "@/components/ui/dialog";
 import { Label } from "@/components/ui/label";
 import { Product } from "@/app/lib/models/product";
-import { format } from "path";
 import { formatCurrency } from "@/app/lib/number";
+import Image from 'next/image';
 
 export async function QuickviewButton({ product }: { product: Product }) {
-
   return (
     <Dialog>
       <DialogTrigger asChild>
@@ -26,13 +23,17 @@ export async function QuickviewButton({ product }: { product: Product }) {
       <DialogContent className="sm:max-w-md bg-white">
         <DialogHeader>
           <DialogTitle>{product.title}</DialogTitle>
-          <DialogDescription>
-            Detailed view of the product.
-          </DialogDescription>
+          <DialogDescription>Detailed view of the product.</DialogDescription>
         </DialogHeader>
         <div className="flex flex-col space-y-2 overflow-y-auto">
           <div>
-            <img src={product.imageUrl} alt={product.title} className="w-full h-[200px] object-cover" />
+            <Image
+              src={product.imageUrl}
+              alt={product.title}
+              width={100}
+              height={200}
+              className="w-full h-[200px] object-cover"
+            />
           </div>
           <div>
             <Label>Price:</Label>
@@ -54,7 +55,7 @@ export async function QuickviewButton({ product }: { product: Product }) {
             <Label>Brand Name:</Label>
             <p>{product.brandName}</p>
           </div>
-         
+
           <div>
             <ul>
               {product.attributeGroups.map((group) => (

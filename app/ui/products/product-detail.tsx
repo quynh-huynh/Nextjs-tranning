@@ -67,6 +67,8 @@ export function ProductDetailView({ customId }: { customId: string }) {
         <div className="flex-shrink-0 w-1/2 mr-24 h-full">
           <Images
             imagesUrl={productDetail.images.map((image) => image.origin)}
+            width={500}
+            height={500}
           />
         </div>
         <div className="flex flex-col gap-4 w-1/2">
@@ -107,7 +109,7 @@ export function ProductDetailView({ customId }: { customId: string }) {
 
             {selectedVariant && (
               <div className="flex flex-col gap-4 w-1/2 justify-center items-center">
-                <OrderPopup variant={selectedVariant} onSave={handleSave} />
+                <OrderPopup variant={selectedVariant} onSave={(value) => handleSave} />
               </div>
             )}
           </div>

@@ -13,7 +13,7 @@ export type Product = {
     brandName: string;
     updatedDate: string;
     attributeGroups: AttributeGroup[];
-    variants: any[];
+    variants: Variant[];
   };
   
 
@@ -28,7 +28,7 @@ export type Attribute = {
   id: string;
   customId: number;
   name: string;
-  value: any;
+  value: string;
 };
 
 

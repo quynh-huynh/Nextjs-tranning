@@ -1,7 +1,7 @@
-'use client'
-import * as React from "react"
+"use client";
+import * as React from "react";
 
-import { Card, CardContent } from "@/components/ui/card"
+import { Card, CardContent } from "@/components/ui/card";
 import {
   Carousel,
   CarouselContent,
@@ -9,25 +9,26 @@ import {
   CarouselNext,
   CarouselPrevious,
   type CarouselApi,
-} from "@/components/ui/carousel"
+} from "@/components/ui/carousel";
+import Image from "next/image";
 
-export function Images({imagesUrl}: {imagesUrl: string[]}) {
-  const [api, setApi] = React.useState<CarouselApi>()
-  const [current, setCurrent] = React.useState(0)
-  const [count, setCount] = React.useState(0)
+export function Images({ imagesUrl }: { imagesUrl: string[] }) {
+  const [api, setApi] = React.useState<CarouselApi>();
+  const [current, setCurrent] = React.useState(0);
+  const [count, setCount] = React.useState(0);
 
   React.useEffect(() => {
     if (!api) {
-      return
+      return;
     }
 
-    setCount(api.scrollSnapList().length)
-    setCurrent(api.selectedScrollSnap() + 1)
+    setCount(api.scrollSnapList().length);
+    setCurrent(api.selectedScrollSnap() + 1);
 
     api.on("select", () => {
-      setCurrent(api.selectedScrollSnap() + 1)
-    })
-  }, [api])
+      setCurrent(api.selectedScrollSnap() + 1);
+    });
+  }, [api]);
 
   return (
     <div className="w-full h-full">
@@ -37,7 +38,13 @@ export function Images({imagesUrl}: {imagesUrl: string[]}) {
             <CarouselItem key={index}>
               <Card>
                 <CardContent className="flex items-center justify-center p-6">
-                  <img src={imageUrl} alt={imageUrl} className="w-full h-[500px] object-cover" />
+                  <Image
+                    src={imageUrl}
+                    alt={imageUrl}
+                    width={300}
+                    height={500}
+                    className="w-full h-[500px] object-cover"
+                  />
                 </CardContent>
               </Card>
             </CarouselItem>
@@ -50,6 +57,5 @@ export function Images({imagesUrl}: {imagesUrl: string[]}) {
         Slide {current} of {count}
       </div>
     </div>
-  )
+  );
 }
-

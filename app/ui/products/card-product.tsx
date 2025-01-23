@@ -8,7 +8,6 @@ import {
 } from "@/components/ui/card";
 
 import Image from "next/image";
-import { Button } from "@/components/ui/button";
 import { Product } from "@/app/lib/models/product";
 import { formatCurrency } from "@/app/lib/number";
 import { DetailProduct } from "./button-detail";
